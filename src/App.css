@@ -1,26 +1,23 @@
-/* table, th, td {
+ table, th, td {
   border: 1px solid #ccc;
   border-collapse: collapse;
-  padding: 0 25px 0 25px;
-  
 }
 
 table {
   width: 100%;
-} */
+} 
 
 .flex-container {
   display: flex;
-  align-items: center;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.item {
+  flex-grow: 1;
+  margin: 1rem;
+  display: flex;
   justify-content: center;
-}
-
-.flex-container .imageStyle {
-  flex: 50%;
-  
-}
-
-.flex-container .tableStyle {
-  flex: 50%;
- 
 }

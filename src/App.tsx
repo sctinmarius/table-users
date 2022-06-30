@@ -35,7 +35,7 @@ const HeaderTable = ({ users }: { users: User[] }) => {
   return (
     <thead>
       <tr>
-        {columns.map((column: string, index: number) => (
+        {columns.map((column: string) => (
           <th key={column}>{column}</th>
         ))}
       </tr>
@@ -76,13 +76,13 @@ const App = (): JSX.Element => {
 
   return (
     <div className="flex-container">
-      <div className="flex-items">
+      <div className="item">
         <table>
           <HeaderTable users={users} />
           <BodyTable users={users} />
         </table>
       </div>
-      <div className="flex-items">
+      <div className="item">
         <img src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" />
       </div>
     </div>
@@ -95,8 +95,12 @@ export default App;
 
 components
   User
+  Table
+    Header
+    Body
+  Avatar
   
-Users
+
 
 
 
