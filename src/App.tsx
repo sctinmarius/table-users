@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 /**
  * 1. Create a REACT component
  * 2. Render HTML <table>
@@ -17,75 +16,27 @@ import { useEffect, useState } from "react";
  */
 
 import "./App.css";
-
-interface Roles {
-  id: number;
-  role: string;
-}
-
-interface User {
-  id: number;
-  name: string;
-  roles?: Roles[];
-}
-
-const HeaderTable = ({ users }: { users: User[] }) => {
-  const columns: string[] = users.reduce((acc: any, user: User) => Object.keys(user), []);
-
-  return (
-    <thead>
-      <tr>
-        {columns.map((column: string) => (
-          <th key={column}>{column}</th>
-        ))}
-      </tr>
-    </thead>
-  );
-};
-
-const getRolesUser = (arrayRoles: Roles[]) => {
-  const roles = arrayRoles.map((role) => role.role);
-  return roles.toString();
-};
-
-const BodyTable = ({ users }: { users: User[] }) => {
-  return (
-    <tbody>
-      {users.map((user) => (
-        <tr key={user.id}>
-          <td>{user.id}</td>
-          <td>{user.name}</td>
-          <td>{user?.roles && getRolesUser(user.roles)}</td>
-        </tr>
-      ))}
-    </tbody>
-  );
-};
+import Table from "./components/Table";
+import useFetch from "./hooks/useFetch";
+import { User } from "./shared/User.types";
 
 const App = (): JSX.Element => {
-  const [users, setUsers] = useState<User[]>([]);
-
-  const fetchUsers = async () => {
-    const res = await fetch("data.json");
-    const data: User[] = await res.json();
-    setUsers(data);
-  };
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
+  const { data, loading, error } = useFetch<User[]>("data.json");
   return (
-    <div className="flex-container">
-      <div className="item">
-        <table>
-          <HeaderTable users={users} />
-          <BodyTable users={users} />
-        </table>
-      </div>
-      <div className="item">
-        <img src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" />
-      </div>
-    </div>
+    <>
+      {loading && <p>Loading..</p>}
+      {error && <p>Error..</p>}
+      {data && (
+        <div className="flex-container">
+          <div className="item">
+            <Table users={data} />
+          </div>
+          <div className="item">
+            <img src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
